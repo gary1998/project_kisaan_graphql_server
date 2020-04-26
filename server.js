@@ -5,6 +5,8 @@ const express = require('express');
 const { buildSchema } = require('graphql');
 const graphqlHTTP = require('express-graphql');
 const { saveUser, saveField, saveCrop } = require('./savers');
+const { editUser, editField, editCrop } = require('./updater');
+const { deleteUser, deleteField, deleteCrop } = require('./remover');
 const { getUsers, getUserByEmail, getUserByFieldId, getUserByCropId, getFields, getFieldsByUserEmail, getFieldByFieldId, getCrops, getCropsByUserEmail, getCropByCropId } = require('./getters'); 
 try {
     mongoose.connect('mongodb+srv://gary29198:0001221149@projectkissan-woslg.mongodb.net/dev-db?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
@@ -66,8 +68,27 @@ var schema = buildSchema(`
         longitude: Int
     }
 
+    input OwnerInput {
+        email: String
+    }
+
+    input GeoJSONInput {
+        type: String,
+        coordinates: [[[Int]]]
+    }
+
     type Mutation {
         createUser(email: String, name: String, age: Int, gender: String, location: LocationInput, photo: String, updated: String): User
+        createField(fieldId: String, owner: OwnerInput, location: GeoJSONInput): Field
+        createCrop(cropId: String, owner: OwnerInput, name: String): Crop
+
+        updateUser(email: String, name: String, age: Int, gender: String, location: LocationInput, photo: String, updated: String): String
+        updateField(fieldId: String, owner: OwnerInput, location: GeoJSONInput): String
+        updateCrop(cropId: String, owner: OwnerInput, name: String): String
+
+        removeUser(email: String): String
+        removeField(fieldId: String): String
+        removeCrop(cropId: String): String
     }
 `);
 
@@ -121,6 +142,24 @@ var root = {
     },
     createCrop: ({cropId, name, owner}) => {
         return saveCrop({cropId, name, owner});
+    },
+    updateUser: ({email, name, age, gender, photo, location, updated}) => {
+        return editUser({email, name, age, gender, photo, location, updated});
+    },
+    updateField: ({fieldId, owner, location}) => {
+        return editField({fieldId, owner, location});
+    },
+    updateCrop: ({cropId, name, owner}) => {
+        return editCrop({cropId, name, owner});
+    },
+    removeUser: ({email}) => {
+        return deleteUser({email});
+    },
+    removeField: (fieldId) => {
+        return deleteField(fieldId);
+    },
+    removeCrop: (cropId) => {
+        return deleteCrop(cropId);
     }
 };
 
