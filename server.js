@@ -7,7 +7,7 @@ const graphqlHTTP = require('express-graphql');
 const { saveUser, saveField, saveCrop } = require('./savers');
 const { editUser, editField, editCrop } = require('./updater');
 const { deleteUser, deleteField, deleteCrop } = require('./remover');
-const { getUsers, getUserByEmail, getUserByFieldId, getUserByCropId, getFields, getFieldsByUserEmail, getFieldByFieldId, getCrops, getCropsByUserEmail, getCropByCropId } = require('./getters'); 
+const { loginUser, getUsers, getUserByEmail, getUserByFieldId, getUserByCropId, getFields, getFieldsByUserEmail, getFieldByFieldId, getCrops, getCropsByUserEmail, getCropByCropId } = require('./getters'); 
 try {
     mongoose.connect('mongodb+srv://gary29198:0001221149@projectkissan-woslg.mongodb.net/dev-db?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
     logger.info("mongoDB server connected!");
@@ -61,6 +61,7 @@ var schema = buildSchema(`
         field(email: String, fieldId: String): Field
         crops: [Crop]
         crop(email: String, cropId: String): Crop
+        login(email: String, password: String): Boolean
     }
 
     input LocationInput {
@@ -78,11 +79,11 @@ var schema = buildSchema(`
     }
 
     type Mutation {
-        createUser(email: String, name: String, age: Int, gender: String, location: LocationInput, photo: String, updated: String): User
+        createUser(email: String, password: String, name: String, age: Int, gender: String, location: LocationInput, photo: String, updated: String): User
         createField(fieldId: String, owner: OwnerInput, location: GeoJSONInput): Field
         createCrop(cropId: String, owner: OwnerInput, name: String): Crop
 
-        updateUser(email: String, name: String, age: Int, gender: String, location: LocationInput, photo: String, updated: String): String
+        updateUser(email: String, password: String, name: String, age: Int, gender: String, location: LocationInput, photo: String, updated: String): String
         updateField(fieldId: String, owner: OwnerInput, location: GeoJSONInput): String
         updateCrop(cropId: String, owner: OwnerInput, name: String): String
 
@@ -134,8 +135,8 @@ var root = {
     crops: () => {
         return getCrops();
     },
-    createUser: ({email, name, age, gender, photo, location, updated}) => {
-        return saveUser({email, name, age, gender, photo, location, updated});
+    createUser: ({email, password, name, age, gender, photo, location, updated}) => {
+        return saveUser({email, password, name, age, gender, photo, location, updated});
     },
     createField: ({fieldId, owner, location}) => {
         return saveField({fieldId, owner, location});
@@ -160,6 +161,9 @@ var root = {
     },
     removeCrop: (cropId) => {
         return deleteCrop(cropId);
+    },
+    login: ({email, password}) => {
+        return loginUser({email, password});
     }
 };
 

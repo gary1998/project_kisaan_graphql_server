@@ -2,13 +2,29 @@ var { userModel } = require ('./models/Users');
 var { fieldModel } = require('./models/Fields');
 var { cropModel } = require('./models/Crops');
 
-const getUsers = () => {
+const loginUser = (data) => {
     return new Promise((resolve, reject) => {
-        userModel.find({}, (err, user) => {
+        userModel.findOne(data, (err, user) => {
             if(err){
                 reject(err);
             } else {
-                resolve(user);
+                if(user){
+                    resolve(true);
+                } else {
+                    resolve(false);
+                }
+            }
+        })
+    })
+}
+
+const getUsers = () => {
+    return new Promise((resolve, reject) => {
+        userModel.find({}, (err, users) => {
+            if(err){
+                reject(err);
+            } else {
+                resolve(users);
             }
         });
     });
@@ -135,6 +151,7 @@ const getCropsByUserEmail = (email) => {
 }
 
 module.exports = {
+    loginUser,
     getUsers,
     getUserByEmail,
     getUserByFieldId,

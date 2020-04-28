@@ -12,6 +12,10 @@ const userSchema = new mongoose.Schema({
             return validator.isEmail(value)
         }
     },
+    password: {
+        type: String,
+        required: true
+    },
     name: {
         type: String,
         trim: true,
