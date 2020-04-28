@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const winston = require('./winston');
 const logger = winston.initLogger("server");
 const express = require('express');
+const cors = require('cors');
 const { buildSchema } = require('graphql');
 const graphqlHTTP = require('express-graphql');
 const { saveUser, saveField, saveCrop } = require('./savers');
@@ -168,6 +169,7 @@ var root = {
 };
 
 var app = express();
+app.use(cors());
 app.use('/graphql', graphqlHTTP({
   schema: schema,
   rootValue: root,
