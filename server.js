@@ -61,7 +61,7 @@ var schema = buildSchema(`
         field(email: String, fieldId: String): Field
         crops: [Crop]
         crop(email: String, cropId: String): Crop
-        login(email: String, password: String): Boolean
+        login(email: String, password: String): User
     }
 
     input LocationInput {

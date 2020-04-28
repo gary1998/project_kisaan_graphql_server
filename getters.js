@@ -8,11 +8,7 @@ const loginUser = (data) => {
             if(err){
                 reject(err);
             } else {
-                if(user){
-                    resolve(true);
-                } else {
-                    resolve(false);
-                }
+                resolve(user);
             }
         })
     })
