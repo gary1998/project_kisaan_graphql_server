@@ -13,7 +13,6 @@ const fieldSchema = new mongoose.Schema({
             type: String,
             required: true,
             trim: true,
-            unique: true,
             lowercase: true,
             validate: (value) => {
                 return validator.isEmail(value)
