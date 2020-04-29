@@ -20,13 +20,13 @@ const editUser = (data) => {
 
 const editField = (data) => {
     return new Promise((resolve, reject) => {
-        fieldModel.updateOne({fieldId: data.fieldId}, data, (err, _) => {
+        fieldModel.updateOne({fieldResId}, data, (err, _) => {
             if(err){
                 logger.error(`error while updating FIELD: ${err}`);
                 reject(err);
             } else {
-                logger.info(`updated FIELD: ${data.fieldId}`);
-                resolve(`updated FIELD: ${data.fieldId}`);
+                logger.info(`updated FIELD: ${data.fieldResId}`);
+                resolve(`updated FIELD: ${data.fieldResId}`);
             }
         });
     });
@@ -34,13 +34,13 @@ const editField = (data) => {
 
 const editCrop = (data) => {
     return new Promise((resolve, reject) => {
-        cropModel.updateOne({cropId: data.cropId}, data, (err, _) => {
+        cropModel.updateOne({cropResId}, data, (err, _) => {
             if(err){
                 logger.error(`error while updating CROP: ${err}`);
                 reject(err);
             } else {
-                logger.info(`updated CROP: ${data.cropId}`);
-                resolve(`updated CROP: ${data.cropId}`);
+                logger.info(`updated CROP: ${data.cropResId}`);
+                resolve(`updated CROP: ${data.cropResId}`);
             }
         });
     });

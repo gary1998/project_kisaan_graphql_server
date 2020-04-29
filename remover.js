@@ -18,29 +18,29 @@ const deleteUser = (data) => {
     });
 }
 
-const deleteField = (fieldId) => {
+const deleteField = (fieldResId) => {
     return new Promise((resolve, reject) => {
-        fieldModel.deleteOne({fieldId}, err => {
+        fieldModel.deleteOne({fieldResId}, err => {
             if(err){
                 logger.error(`error while removing FIELD: ${err}`);
                 reject(err);
             } else {
-                logger.info(`FIELD removed: ${fieldId}`);
-                resolve(`FIELD removed: ${fieldId}`);
+                logger.info(`FIELD removed: ${fieldResId}.`);
+                resolve(`FIELD removed: ${fieldResId}.`);
             }
         });
     });
 }
 
-const deleteCrop = (cropId) => {
+const deleteCrop = (cropResId) => {
     return new Promise((resolve, reject) => {
-        cropModel.deleteOne({cropId}, err => {
+        cropModel.deleteOne({cropResId}, err => {
             if(err){
                 logger.error(`error while removing CROP: ${err}`);
                 reject(err);
             } else {
-                logger.info(`CROP removed: ${cropId}`);
-                resolve(`CROP removed: ${cropId}`);
+                logger.info(`CROP removed: ${cropResId}`);
+                resolve(`CROP removed: ${cropResId}`);
             }
         });
     });

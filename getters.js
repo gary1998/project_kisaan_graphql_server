@@ -38,9 +38,9 @@ const getUserByEmail = (email) => {
     });
 }
 
-const getUserByFieldId = (fieldId) => {
+const getUserByFieldId = (fieldResId) => {
     return new Promise((resolve, reject) => {
-        fieldModel.findOne({fieldId}, (err, field) => {
+        fieldModel.findOne({fieldResId}, (err, field) => {
             if(err){
                 reject(err);
             } else if(field){
@@ -56,9 +56,9 @@ const getUserByFieldId = (fieldId) => {
     });
 }
 
-const getUserByCropId = (cropId) => {
+const getUserByCropId = (cropResId) => {
     return new Promise((resolve, reject) => {
-        cropModel.findOne({cropId}, (err, crop) => {
+        cropModel.findOne({cropResId}, (err, crop) => {
             if(err){
                 reject(err);
             } else if(crop){
@@ -86,9 +86,9 @@ const getFields = () => {
     });
 }
 
-const getFieldByFieldId = (fieldId) => {
+const getFieldByFieldResId = (fieldResId) => {
     return new Promise((resolve, reject) => {
-        fieldModel.findOne({fieldId}, (err, field) => {
+        fieldModel.findOne({fieldResId}, (err, field) => {
             if(err){
                 reject(err);
             } else {
@@ -122,9 +122,9 @@ const getCrops = () => {
     });
 }
 
-const getCropByCropId = (cropId) => {
+const getCropByCropResId = (cropResId) => {
     return new Promise((resolve, reject) => {
-        fieldModel.findOne({cropId}, (err, crop) => {
+        fieldModel.findOne({cropResId}, (err, crop) => {
             if(err){
                 reject(err);
             } else {
@@ -153,9 +153,9 @@ module.exports = {
     getUserByFieldId,
     getUserByCropId,
     getFields, 
-    getFieldByFieldId,
+    getFieldByFieldResId,
     getFieldsByUserEmail,
     getCrops,
-    getCropByCropId,
+    getCropByCropResId,
     getCropsByUserEmail
 }

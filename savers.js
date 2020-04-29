@@ -25,7 +25,7 @@ const saveField = (data) => {
                 logger.error(`error while saving new FIELD: ${err}`);
                 reject(err);
             } else {
-                logger.info(`new FIELD saved: ${field.fieldId}`);
+                logger.info(`new FIELD saved: ${field.fieldResId}`);
                 resolve(field);
             }
         });
@@ -39,7 +39,7 @@ const saveCrop = (data) => {
                 logger.error(`error while saving new CROP: ${err}`);
                 reject(err);
             } else {
-                logger.info(`new CROP saved: ${crop.cropId}`);
+                logger.info(`new CROP saved: ${crop.cropResId}`);
                 resolve(crop);
             }
         });

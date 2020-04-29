@@ -6,8 +6,6 @@ const fieldSchema = new mongoose.Schema({
         type: String,
         trim: true,
         required: true,
-        unique: true,
-        index: true
     },
     owner: {
         type: String,
@@ -29,6 +27,12 @@ const fieldSchema = new mongoose.Schema({
             required: true
         }
 
+    },
+    fieldResId: {
+        type: String,
+        required: true,
+        unique: true,
+        index: true
     }
 }, {
     collection: 'fields'

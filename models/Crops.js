@@ -21,7 +21,7 @@ const cropSchema = new mongoose.Schema({
             return validator.isEmail(value)
         }
     },
-    id: {
+    cropResId: {
         type: String,
         required: true,
         unique: true,
