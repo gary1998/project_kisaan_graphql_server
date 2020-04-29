@@ -58,9 +58,11 @@ var schema = buildSchema(`
     type Query {
         users: [User]
         user(email: String, fieldId: String, cropId: String): User
-        fields: [Field]
+        allFields: [Field]
+        fields(email: String): [Field]
         field(email: String, fieldId: String): Field
-        crops: [Crop]
+        allCrops: [Crop]
+        crops(email: String): [Crop]
         crop(email: String, cropId: String): Crop
         login(email: String, password: String): User
     }
@@ -121,7 +123,10 @@ var root = {
             return null;
         }
     },
-    fields: () => {
+    fields: (email) => {
+        return getFieldsByUserEmail(email.email);
+    },
+    allFields: () => {
         return getFields();
     },
     crop: ({email, cropId}) => {
@@ -133,7 +138,10 @@ var root = {
             return null;
         }
     },
-    crops: () => {
+    crops: (email) => {
+        return getCropsByUserEmail(email.email);
+    },
+    allCrops: () => {
         return getCrops();
     },
     createUser: ({email, password, name, age, gender, photo, location, updated}) => {
