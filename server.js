@@ -76,7 +76,7 @@ var schema = buildSchema(`
     type Mutation {
         createUser(email: String, password: String, name: String, age: Int, gender: String, location: LocationInput, photo: String, updated: String): User
         createField(fieldId: String, owner: String, location: GeoJSONInput): Field
-        createCrop(cropId: String, owner: String, name: String): Crop
+        createCrop(id: String, cropId: String, owner: String, name: String): Crop
 
         updateUser(email: String, password: String, name: String, age: Int, gender: String, location: LocationInput, photo: String, updated: String): String
         updateField(fieldId: String, owner: String, location: GeoJSONInput): String
@@ -142,8 +142,8 @@ var root = {
     createField: ({fieldId, owner, location}) => {
         return saveField({fieldId, owner, location});
     },
-    createCrop: ({cropId, name, owner}) => {
-        return saveCrop({cropId, name, owner});
+    createCrop: ({id, cropId, name, owner}) => {
+        return saveCrop({id, cropId, name, owner});
     },
     updateUser: ({email, name, age, gender, photo, location, updated}) => {
         return editUser({email, name, age, gender, photo, location, updated});
