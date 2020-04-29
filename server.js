@@ -158,10 +158,10 @@ var root = {
         return deleteUser({email});
     },
     removeField: (fieldId) => {
-        return deleteField(fieldId);
+        return deleteField(fieldId.fieldId);
     },
     removeCrop: (cropId) => {
-        return deleteCrop(cropId);
+        return deleteCrop(cropId.cropId);
     },
     login: ({email, password}) => {
         return loginUser({email, password});
