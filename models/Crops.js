@@ -14,14 +14,13 @@ const cropSchema = new mongoose.Schema({
         required: true,
     },
     owner: {
-        email: {
-            type: String,
-            required: true,
-            trim: true,
-            lowercase: true,
-            validate: (value) => {
-                return validator.isEmail(value)
-            }
+        type: String,
+        required: true,
+        unique: false,
+        trim: true,
+        lowercase: true,
+        validate: (value) => {
+            return validator.isEmail(value)
         }
     }
 }, {

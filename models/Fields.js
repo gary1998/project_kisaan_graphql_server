@@ -9,14 +9,12 @@ const fieldSchema = new mongoose.Schema({
         unique: true
     },
     owner: {
-        email: {
-            type: String,
-            required: true,
-            trim: true,
-            lowercase: true,
-            validate: (value) => {
-                return validator.isEmail(value)
-            }
+        type: String,
+        required: true,
+        trim: true,
+        lowercase: true,
+        validate: (value) => {
+            return validator.isEmail(value)
         }
     },
     location: {

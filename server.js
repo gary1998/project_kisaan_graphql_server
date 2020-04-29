@@ -19,10 +19,6 @@ const port = process.env.PORT || 4000;
 
 // Construct a schema, using GraphQL schema language
 var schema = buildSchema(`
-    type Owner {
-        email: String
-    }
-
     type GeoJSON {
         type: String,
         coordinates: [[[Int]]]
@@ -35,14 +31,14 @@ var schema = buildSchema(`
 
     type Field {
         fieldId: String,
-        owner: Owner,
+        owner: String,
         location: GeoJSON
     }
 
     type Crop {
         cropId: String,
         name: String,
-        owner: Owner
+        owner: String
     }
 
     type User {
@@ -72,10 +68,6 @@ var schema = buildSchema(`
         longitude: Int
     }
 
-    input OwnerInput {
-        email: String
-    }
-
     input GeoJSONInput {
         type: String,
         coordinates: [[[Int]]]
@@ -83,12 +75,12 @@ var schema = buildSchema(`
 
     type Mutation {
         createUser(email: String, password: String, name: String, age: Int, gender: String, location: LocationInput, photo: String, updated: String): User
-        createField(fieldId: String, owner: OwnerInput, location: GeoJSONInput): Field
-        createCrop(cropId: String, owner: OwnerInput, name: String): Crop
+        createField(fieldId: String, owner: String, location: GeoJSONInput): Field
+        createCrop(cropId: String, owner: String, name: String): Crop
 
         updateUser(email: String, password: String, name: String, age: Int, gender: String, location: LocationInput, photo: String, updated: String): String
-        updateField(fieldId: String, owner: OwnerInput, location: GeoJSONInput): String
-        updateCrop(cropId: String, owner: OwnerInput, name: String): String
+        updateField(fieldId: String, owner: String, location: GeoJSONInput): String
+        updateCrop(cropId: String, owner: String, name: String): String
 
         removeUser(email: String): String
         removeField(fieldId: String): String

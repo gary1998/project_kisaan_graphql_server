@@ -44,7 +44,7 @@ const getUserByFieldId = (fieldId) => {
             if(err){
                 reject(err);
             } else if(field){
-                getUserByEmail(field.owner.email).then(user => {
+                getUserByEmail(field.owner).then(user => {
                     resolve(user);
                 }).catch(err => {
                     reject(err);
@@ -62,7 +62,7 @@ const getUserByCropId = (cropId) => {
             if(err){
                 reject(err);
             } else if(crop){
-                getUserByEmail(crop.owner.email).then(user => {
+                getUserByEmail(crop.owner).then(user => {
                     resolve(user);
                 }).catch(err => {
                     reject(err);
@@ -100,7 +100,7 @@ const getFieldByFieldId = (fieldId) => {
 
 const getFieldsByUserEmail = (email) => {
     return new Promise((resolve, reject) => {
-        fieldModel.find({"owner.email": email}, (err, fields) => {
+        fieldModel.find({"owner": email}, (err, fields) => {
             if(err){
                 reject(err);
             } else {
@@ -136,7 +136,7 @@ const getCropByCropId = (cropId) => {
 
 const getCropsByUserEmail = (email) => {
     return new Promise((resolve, reject) => {
-        cropModel.find({"owner.email": email}, (err, fields) => {
+        cropModel.find({"owner": email}, (err, fields) => {
             if(err){
                 reject(err);
             } else {
