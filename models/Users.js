@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema({
         trim: true,
         unique: true,
         lowercase: true,
+        index: true,
         validate: (value) => {
             return validator.isEmail(value)
         }
