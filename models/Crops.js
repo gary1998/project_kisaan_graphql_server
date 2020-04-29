@@ -6,8 +6,6 @@ const cropSchema = new mongoose.Schema({
         type: String,
         trim: true,
         required: true,
-        unique: true,
-        index: true
     },
     name: {
         type: String,
@@ -17,12 +15,17 @@ const cropSchema = new mongoose.Schema({
     owner: {
         type: String,
         required: true,
-        unique: false,
         trim: true,
         lowercase: true,
         validate: (value) => {
             return validator.isEmail(value)
         }
+    },
+    id: {
+        type: String,
+        required: true,
+        unique: true,
+        index: true
     }
 }, {
     collection: 'crops'
