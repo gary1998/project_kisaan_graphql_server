@@ -19,21 +19,35 @@ const port = process.env.PORT || 4000;
 
 // Construct a schema, using GraphQL schema language
 var schema = buildSchema(`
-    type GeoJSON {
+    type GeoJSONGeometry {
         type: String,
-        coordinates: [[[Int]]]
+        coordinates: [[[Float]]]
+    }
+    
+    type GeoJSONFeatures {
+        type: String,
+        geometry: GeoJSONGeometry
     }
 
+    type GeoJSONType {
+        type: String,
+        features: [GeoJSONFeatures]
+    }
+
+    type FieldData {
+        name: String,
+        geo_json: GeoJSONType
+    }
+    
     type Location {
-        latitude: Int,
-        longitude: Int
+        latitude: String,
+        longitude: String
     }
 
     type Field {
         fieldResId: String,
-        fieldId: String,
         owner: String,
-        location: GeoJSON
+        data: FieldData
     }
 
     type Crop {
@@ -66,22 +80,37 @@ var schema = buildSchema(`
     }
 
     input LocationInput {
-        latitude: Int,
-        longitude: Int
+        latitude: String,
+        longitude: String
     }
 
-    input GeoJSONInput {
+    input GeoJSONInputGeometry {
         type: String,
-        coordinates: [[[Int]]]
+        coordinates: [[[Float]]]
+    }
+    
+    input GeoJSONInputFeatures {
+        type: String,
+        geometry: GeoJSONInputGeometry
+    }
+
+    input GeoJSONInputType {
+        type: String,
+        features: [GeoJSONInputFeatures]
+    }
+
+    input FieldInputData {
+        name: String,
+        geo_json: GeoJSONInputType
     }
 
     type Mutation {
         createUser(email: String, password: String, name: String, age: Int, gender: String, location: LocationInput, photo: String, updated: String): User
-        createField(fieldResId: String, fieldId: String, owner: String, location: GeoJSONInput): Field
+        createField(fieldResId: String, owner: String, data: FieldInputData): Field
         createCrop(cropResId: String, cropId: String, owner: String, name: String): Crop
 
         updateUser(email: String, password: String, name: String, age: Int, gender: String, location: LocationInput, photo: String, updated: String): String
-        updateField(fieldResId: String, fieldId: String, owner: String, location: GeoJSONInput): String
+        updateField(fieldResId: String, owner: String, data: FieldInputData): String
         updateCrop(cropResId: String, cropId: String, owner: String, name: String): String
 
         removeUser(email: String): String
@@ -141,8 +170,8 @@ var root = {
     createUser: ({email, password, name, age, gender, photo, location, updated}) => {
         return saveUser({email, password, name, age, gender, photo, location, updated});
     },
-    createField: ({fieldResId, fieldId, owner, location}) => {
-        return saveField({fieldResId, fieldId, owner, location});
+    createField: ({fieldResId, owner, data}) => {
+        return saveField({fieldResId, owner, data});
     },
     createCrop: ({cropResId, cropId, name, owner}) => {
         return saveCrop({cropResId, cropId, name, owner});
@@ -150,8 +179,8 @@ var root = {
     updateUser: ({email, name, age, gender, photo, location, updated}) => {
         return editUser({email, name, age, gender, photo, location, updated});
     },
-    updateField: ({fieldResId, fieldId, owner, location}) => {
-        return editField({fieldResId, fieldId, owner, location});
+    updateField: ({fieldResId, owner, data}) => {
+        return editField({fieldResId, owner, data});
     },
     updateCrop: ({cropResId, cropId, name, owner}) => {
         return editCrop({cropResId, cropId, name, owner});

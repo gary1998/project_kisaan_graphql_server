@@ -38,7 +38,7 @@ const getUserByEmail = (email) => {
     });
 }
 
-const getUserByFieldId = (fieldResId) => {
+const getUserByFieldResId = (fieldResId) => {
     return new Promise((resolve, reject) => {
         fieldModel.findOne({fieldResId}, (err, field) => {
             if(err){
@@ -56,7 +56,7 @@ const getUserByFieldId = (fieldResId) => {
     });
 }
 
-const getUserByCropId = (cropResId) => {
+const getUserByCropResId = (cropResId) => {
     return new Promise((resolve, reject) => {
         cropModel.findOne({cropResId}, (err, crop) => {
             if(err){
@@ -150,8 +150,8 @@ module.exports = {
     loginUser,
     getUsers,
     getUserByEmail,
-    getUserByFieldId,
-    getUserByCropId,
+    getUserByFieldResId,
+    getUserByCropResId,
     getFields, 
     getFieldByFieldResId,
     getFieldsByUserEmail,

@@ -2,11 +2,6 @@ const mongoose = require('mongoose')
 const validator = require('validator')
 
 const fieldSchema = new mongoose.Schema({
-    fieldId: {
-        type: String,
-        trim: true,
-        required: true,
-    },
     owner: {
         type: String,
         required: true,
@@ -16,17 +11,45 @@ const fieldSchema = new mongoose.Schema({
             return validator.isEmail(value)
         }
     },
-    location: {
-        type: {
+    data: {
+        name: {
             type: String,
-            enum: ['Polygon'],
-            required: true
+            trim: true,
+            required: true,
         },
-        coordinates: {
-            type: [[[Number]]],
-            required: true
+        geo_json: {
+            type: {
+                type: String,
+                enum: ['FeatureCollection'],
+                required: true
+            },
+            features: [{
+                type: {
+                    type: String,
+                    enum: ['Feature'],
+                    required: true,
+                },
+                properties: {
+                    type: mongoose.Schema.Types.Mixed,
+                    required: true,
+                    default: {}
+                },
+                geometry: {
+                    type: {
+                        type: String,
+                        enum: ['Polygon'],
+                        required: true,
+                    },
+                    coordinates: {
+                        type: [[[Number]]]
+                    }
+                }
+            }],
+            coordinates: {
+                type: [[[Number]]],
+                required: true
+            }
         }
-
     },
     fieldResId: {
         type: String,
@@ -35,6 +58,7 @@ const fieldSchema = new mongoose.Schema({
         index: true
     }
 }, {
+    minimize: false,
     collection: 'fields'
 })
 
